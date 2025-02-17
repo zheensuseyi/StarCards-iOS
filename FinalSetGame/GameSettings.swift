@@ -4,27 +4,20 @@
 //
 //  Created by Zheen Suseyi on 2/14/25.
 //
-enum CardShape: CaseIterable {
-    case circle, square, triangle
-}
 
-enum CardShading: CaseIterable {
-    case solid, striped, outlined
-}
-
-enum CardColor: CaseIterable {
-    case red, green, purple
-}
 import Foundation
 struct GameSettings {
     var cardDeck: [Card]
     private(set)var score: Int = 0
     var idCounter = 0
     init() {
+        let colorArray: [String] = ["Red", "Blue", "Green"]
+        let shadingArray: [String] = ["Solid", "Striped", "Outlined"]
+        let shapeArray: [String] = ["Square", "Triangle", "Circle"]
         cardDeck = []
-        for shape in CardShape.allCases {
-            for shading in CardShading.allCases {
-                for color in CardColor.allCases {
+        for shape in colorArray {
+            for shading in shadingArray {
+                for color in shapeArray {
                     for number in 1...3 {
                         let card = Card(id:idCounter, shape: shape, numberOfShapes: number, shading: shading, color: color)
                         cardDeck.append(card)
@@ -36,17 +29,55 @@ struct GameSettings {
         cardDeck = cardDeck.shuffled()
     }
     
-    mutating func checkAnswer(_ deck: [Card]) {
-        var colorArray: [CardColor] = []
-        var shapeArray: [CardShape] = []
+    mutating func checkAnswer(_ deck: [Card]) -> String{
+        var colorArray: [String] = []
+        var shapeArray: [String] = []
         var numberArray: [Int] = []
-        var shadingArray: [CardShading] = []
+        var shadingArray: [String] = []
         for i in deck {
             colorArray.append(i.color)
             shapeArray.append(i.shape)
             numberArray.append(i.numberOfShapes)
             shadingArray.append(i.shading)
         }
+        var colorDict: [String: Int] = [:]
+        var shapeDict: [String: Int] = [:]
+        var numberDict: [Int: Int] = [:]
+        var shadingDict: [String: Int] = [:]
+        
+        for color in colorArray {
+            colorDict[color, default: 0] += 1
+        }
+        for shape in shapeArray {
+            shapeDict[shape, default: 0] += 1
+        }
+        for number in numberArray {
+            numberDict[number, default: 0] += 1
+        }
+        for shading in shadingArray {
+            shadingDict[shading, default: 0] += 1
+        }
+        
+        let colorValues = Array(colorDict.values)
+        let shapeValues = Array(shapeDict.values)
+        let numberValues = Array(numberDict.values)
+        let shadingValues = Array(shadingDict.values)
+        
+        let colorSum = colorValues.reduce(0, +)
+        let shapeSum = shapeValues.reduce(0, +)
+        let numberSum = numberValues.reduce(0, +)
+        let shadingSum = shadingValues.reduce(0, +)
+
+        let totalSum = [colorSum, shapeSum, numberSum, shadingSum]
+        
+        for num in totalSum {
+            if num != 3 || num != 6 {
+                score -= 1
+                return "Not a set!"
+            }
+        }
+        score += 1
+        return "Found a new set!"
     }
     
     mutating func addAndRemoveCards(numberOfCards: Int) -> [Card]{
@@ -61,13 +92,12 @@ struct GameSettings {
 
     struct Card: Identifiable{
         var id: Int
-        var shape: CardShape
-        var shading: CardShading
-        var color: CardColor
+        var shape: String
+        var shading: String
+        var color: String
         var numberOfShapes: Int
         var isSelected: Bool = false
-        var isMatched: Bool = false
-        init(id: Int, shape: CardShape, numberOfShapes: Int, shading: CardShading, color: CardColor) {
+        init(id: Int, shape: String, numberOfShapes: Int, shading: String, color: String) {
             self.id = id
             self.shape = shape
             self.numberOfShapes = numberOfShapes

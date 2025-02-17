@@ -13,10 +13,15 @@ class SetCardGame: ObservableObject {
     var cardDeck: [GameSettings.Card] {
         return game.cardDeck
     }
-    @Published var startingDeck: [GameSettings.Card]
-    
+    var score: Int {
+        return game.score
+    }
+    var setAlert: Alert {
+        Alert(title: Text("\(setText)"), message: Text("Your score is now \(score)"), dismissButton: .default(Text("Dismiss")))
+    }
+    var setText: String = ""
+    @Published var startingDeck: [GameSettings.Card] = []
     init() {
-        startingDeck = []
         let tempDeck = game.addAndRemoveCards(numberOfCards: 12)
         startingDeck = tempDeck
     }
@@ -27,6 +32,7 @@ class SetCardGame: ObservableObject {
             startingDeck.append(i)
         }
     }
+    
     func checkAnswer(startingDeck: [GameSettings.Card]){
         var deckToSend: [GameSettings.Card] = []
         for i in startingDeck {
@@ -34,7 +40,11 @@ class SetCardGame: ObservableObject {
                 deckToSend.append(i)
             }
         }
-        game.checkAnswer(deckToSend)
+        setText = game.checkAnswer(deckToSend)
+    }
+    
+    func initalizeCard(card: GameSettings.Card) {
+        
     }
     
 }

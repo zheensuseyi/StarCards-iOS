@@ -12,7 +12,8 @@ struct ContentView: View {
     var body: some View {
         VStack {
             ScrollView {
-                Text("Hello, world! \(vm.startingDeck.count)")
+                Text("Hello, score! \(vm.score)")
+                Text("Hello, world! \(vm.startingDeck)")
                 Text("Hello, earth! \(vm.cardDeck.count)")
             }
             Button("Add some cards!") {
