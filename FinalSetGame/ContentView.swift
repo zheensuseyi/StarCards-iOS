@@ -11,12 +11,14 @@ struct ContentView: View {
     @ObservedObject var vm: SetCardGame
     var body: some View {
         VStack {
+            Text("Find All The sets!")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+            Text("Score: \(vm.score)")
             ScrollView {
-                Text("Hello, score! \(vm.score)")
-                Text("Hello, world! \(vm.startingDeck)")
-                Text("Hello, earth! \(vm.cardDeck.count)")
+                AspectVGrid(vm: vm)
             }
-            Button("Add some cards!") {
+            Button("Add 3 Cards!" ) {
                 vm.addThreeCards()
             }
         }
@@ -27,3 +29,18 @@ struct ContentView: View {
 #Preview {
     ContentView(vm: SetCardGame())
 }
+
+/*Button(action: {
+    // Action to perform when button is tapped
+    print("Custom button tapped!")
+}) {
+    HStack {
+        Image(systemName: "star.fill")
+        Text("Favorite")
+    }
+    .padding()
+    .background(Color.blue)
+    .foregroundColor(.white)
+    .cornerRadius(8)
+}
+*/

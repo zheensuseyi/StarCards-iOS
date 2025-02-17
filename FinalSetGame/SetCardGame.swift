@@ -43,8 +43,26 @@ class SetCardGame: ObservableObject {
         setText = game.checkAnswer(deckToSend)
     }
     
-    func initalizeCard(card: GameSettings.Card) {
-        
+    func initalizeCardColor(color: String) -> Color {
+        switch color {
+        case "Red":
+            return Color(.red)
+        case "Cyan":
+            return Color(.cyan)
+        case "Green":
+            return Color(.green)
+        case "Gray":
+            return Color(.gray)
+        case "Orange":
+            return Color(.orange)
+        case "Purple":
+            return Color(.purple)
+        default:
+            return Color(.red)
+        }
     }
+    
+    
+  
     
 }

@@ -11,13 +11,13 @@ struct GameSettings {
     private(set)var score: Int = 0
     var idCounter = 0
     init() {
-        let colorArray: [String] = ["Red", "Blue", "Green"]
-        let shadingArray: [String] = ["Solid", "Striped", "Outlined"]
-        let shapeArray: [String] = ["Square", "Triangle", "Circle"]
+        let colorArray: [String] = ["Red", "Cyan", "Green"]
+        let shadingArray: [String] = ["Gray", "Orange", "Purple"]
+        let shapeArray: [String] = ["square.fill", "triangle.fill", "circle.fill"]
         cardDeck = []
-        for shape in colorArray {
+        for color in colorArray {
             for shading in shadingArray {
-                for color in shapeArray {
+                for shape in shapeArray {
                     for number in 1...3 {
                         let card = Card(id:idCounter, shape: shape, numberOfShapes: number, shading: shading, color: color)
                         cardDeck.append(card)
@@ -27,6 +27,16 @@ struct GameSettings {
             }
         }
         cardDeck = cardDeck.shuffled()
+    }
+    
+    // adding and removing cards, its how currentDeck gets initalized and how cards get added to that deck
+    mutating func addAndRemoveCards(numberOfCards: Int) -> [Card]{
+        var tempDeck: [Card] = []
+        for i in 0..<numberOfCards {
+            tempDeck.append(cardDeck[i])
+        }
+        cardDeck.removeFirst(numberOfCards)
+        return tempDeck
     }
     
     mutating func checkAnswer(_ deck: [Card]) -> String{
@@ -80,14 +90,6 @@ struct GameSettings {
         return "Found a new set!"
     }
     
-    mutating func addAndRemoveCards(numberOfCards: Int) -> [Card]{
-        var tempDeck: [Card] = []
-        for i in 0..<numberOfCards {
-            tempDeck.append(cardDeck[i])
-        }
-        cardDeck.removeFirst(numberOfCards)
-        return tempDeck
-    }
     
 
     struct Card: Identifiable{

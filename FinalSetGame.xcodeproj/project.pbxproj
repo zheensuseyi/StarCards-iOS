@@ -13,6 +13,8 @@
 		ADD5B4C02D6013F3000587E3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADD5B4BF2D6013F3000587E3 /* Preview Assets.xcassets */; };
 		ADD5B4C72D60140B000587E3 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5B4C62D60140B000587E3 /* GameSettings.swift */; };
 		ADD5B4C92D601461000587E3 /* SetCardGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5B4C82D601461000587E3 /* SetCardGame.swift */; };
+		ADD5B4CB2D63E4ED000587E3 /* ShapeInitialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5B4CA2D63E4ED000587E3 /* ShapeInitialization.swift */; };
+		ADD5B4CD2D63FFC4000587E3 /* AspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5B4CC2D63FFC4000587E3 /* AspectVGrid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +25,8 @@
 		ADD5B4BF2D6013F3000587E3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		ADD5B4C62D60140B000587E3 /* GameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
 		ADD5B4C82D601461000587E3 /* SetCardGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardGame.swift; sourceTree = "<group>"; };
+		ADD5B4CA2D63E4ED000587E3 /* ShapeInitialization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeInitialization.swift; sourceTree = "<group>"; };
+		ADD5B4CC2D63FFC4000587E3 /* AspectVGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectVGrid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +61,9 @@
 			children = (
 				ADD5B4B82D6013F1000587E3 /* FinalSetGameApp.swift */,
 				ADD5B4BA2D6013F1000587E3 /* ContentView.swift */,
+				ADD5B4CC2D63FFC4000587E3 /* AspectVGrid.swift */,
 				ADD5B4C82D601461000587E3 /* SetCardGame.swift */,
+				ADD5B4CA2D63E4ED000587E3 /* ShapeInitialization.swift */,
 				ADD5B4C62D60140B000587E3 /* GameSettings.swift */,
 				ADD5B4BC2D6013F3000587E3 /* Assets.xcassets */,
 				ADD5B4BE2D6013F3000587E3 /* Preview Content */,
@@ -145,8 +151,10 @@
 			files = (
 				ADD5B4C92D601461000587E3 /* SetCardGame.swift in Sources */,
 				ADD5B4BB2D6013F1000587E3 /* ContentView.swift in Sources */,
+				ADD5B4CD2D63FFC4000587E3 /* AspectVGrid.swift in Sources */,
 				ADD5B4B92D6013F1000587E3 /* FinalSetGameApp.swift in Sources */,
 				ADD5B4C72D60140B000587E3 /* GameSettings.swift in Sources */,
+				ADD5B4CB2D63E4ED000587E3 /* ShapeInitialization.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
