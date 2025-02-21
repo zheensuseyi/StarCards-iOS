@@ -5,11 +5,14 @@
 //  Created by Zheen Suseyi on 2/14/25.
 //
 
+// FIXME: flesh out the program more
 import Foundation
 struct GameSettings {
     var cardDeck: [Card]
-    private(set)var score: Int = 0
+    private(set)var score = 81
     var idCounter = 0
+    var gameLost = false
+    var gameWon = false
     init() {
         let colorArray: [String] = ["Red", "Cyan", "Green"]
         let shadingArray: [String] = ["Gray", "Orange", "Purple"]
@@ -19,8 +22,7 @@ struct GameSettings {
             for shading in shadingArray {
                 for shape in shapeArray {
                     for number in 1...3 {
-                        let card = Card(id:idCounter, shape: shape, numberOfShapes: number, shading: shading, color: color)
-                        cardDeck.append(card)
+                        cardDeck.append(Card(id:idCounter, shape: shape, numberOfShapes: number, shading: shading, color: color))
                         idCounter += 1
                     }
                 }
@@ -29,17 +31,26 @@ struct GameSettings {
         cardDeck = cardDeck.shuffled()
     }
     
+    
+    
+    
     // adding and removing cards, its how currentDeck gets initalized and how cards get added to that deck
     mutating func addAndRemoveCards(numberOfCards: Int) -> [Card]{
         var tempDeck: [Card] = []
         for i in 0..<numberOfCards {
             tempDeck.append(cardDeck[i])
         }
+        score -= numberOfCards
+        if score < 0 {
+            gameLost = true
+        }
         cardDeck.removeFirst(numberOfCards)
         return tempDeck
     }
     
-    mutating func checkAnswer(_ deck: [Card]) -> String{
+    
+    // FIXME: this function is a joke, make it better
+    mutating func checkAnswer(_ deck: [Card]) {
         var colorArray: [String] = []
         var shapeArray: [String] = []
         var numberArray: [Int] = []
@@ -82,12 +93,13 @@ struct GameSettings {
         
         for num in totalSum {
             if num != 3 || num != 6 {
-                score -= 1
-                return "Not a set!"
+                score -= 25
+                if score < 1 {
+                    gameLost = true
+                }
             }
         }
-        score += 1
-        return "Found a new set!"
+        gameWon = true
     }
     
     

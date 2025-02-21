@@ -7,20 +7,29 @@
 
 import SwiftUI
 
+// FIXME: Make checkanswer actually work lol...
 struct ContentView: View {
     @ObservedObject var vm: SetCardGame
     var body: some View {
         VStack {
-            Text("Find All The sets!")
+            Text("Find A Set!")
                 .font(.largeTitle)
                 .fontWeight(.bold)
             Text("Score: \(vm.score)")
             ScrollView {
                 AspectVGrid(vm: vm)
             }
-            Button("Add 3 Cards!" ) {
-                vm.addThreeCards()
+            HStack {
+                Button(action: vm.addThreeCards) {
+                    Label("Add Cards", systemImage: "plus.app.fill") // SF Symbol
+                }
+                
+                Spacer()
+                Button(action: vm.addThreeCards) {
+                    Label("Check Answer", systemImage: "checkmark.shield.fill") // SF Symbol
+                }
             }
+            .font(.title2)
         }
         .padding()
     }
