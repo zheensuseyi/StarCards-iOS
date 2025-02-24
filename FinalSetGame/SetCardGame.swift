@@ -7,31 +7,22 @@
 
 import SwiftUI
 
-//FIXME: Organize this code, theres no way this is how a viewmodel should look
-
+// FIXME: Maybe move startingDeck to the model, figure out how to call alerts. 
 class SetCardGame: ObservableObject {
     @Published var game = GameSettings()
-    
-    var cardDeck: [GameSettings.Card] {
-        return game.cardDeck
-    }
-    var score: Int {
-        return game.score
-    }
-    var gameLost: Bool {
-        return game.gameLost
-    }
-    var gameWon: Bool {
-        return game.gameWon
-    }
-    
-    
+    @Published var cardDeck: [GameSettings.Card] = []
+    @Published var score: Int = 0
+    @Published var gameLost: Bool = false
+    @Published var gameWon: Bool = false
     @Published var startingDeck: [GameSettings.Card] = []
-    init() {
-        let tempDeck = game.addAndRemoveCards(numberOfCards: 6)
-        startingDeck = tempDeck
-    }
     
+    init() {
+        score = game.score
+        gameLost = game.gameLost
+        gameWon = game.gameWon
+        cardDeck = game.initalizeDeck()
+        startingDeck = game.addAndRemoveCards(numberOfCards: 6)
+    }
     
     var gameLostAlert: Alert {
         Alert(title: Text("Game Over"), message: Text("Better luck next time.... Try again?"), dismissButton: .default(Text("Dismiss")))
@@ -40,48 +31,56 @@ class SetCardGame: ObservableObject {
         Alert(title: Text("You found a set!"), message: Text("You won! Your final score was \(score)"), dismissButton: .default(Text("Dismiss")))
     }
     
-    func choose(_ cardID: Int) {
-        if let indexOfCard = startingDeck.firstIndex(where: { $0.id == cardID }) {
-            print("Toggling isSelected on \(startingDeck[indexOfCard].id)")
-            startingDeck[indexOfCard].isSelected.toggle()
-        }
-    }
     
+    // MARK: functions that call model functions
     
-    
+    // adds 3 cards
     func addThreeCards() {
         let tempDeck = game.addAndRemoveCards(numberOfCards: 3)
         for i in tempDeck {
             startingDeck.append(i)
         }
+        cardDeck = game.cardDeck
+        score -= 3
     }
-    
-    func checkAnswer(startingDeck: [GameSettings.Card]){
+    // checks Answer
+    func checkAnswer(){
         var deckToSend: [GameSettings.Card] = []
         for i in startingDeck {
             if i.isSelected {
                 deckToSend.append(i)
             }
         }
+        print("Number of cards sent: \(deckToSend.count)")
+        score = game.checkAnswer(deckToSend)
+        if score < 0 {
+            print("You LOST")
+        }
+        else if score > 100 {
+            print("you WON")
+        }
     }
     
+    // FIXME: Test these functions
+    // function for new game
+    func newGame() {
+        game.newGame()
+        syncWithModel()
+    }
     
-    func initalizeCardColor(color: String) -> Color {
-        switch color {
-        case "Red":
-            return Color(.red)
-        case "Cyan":
-            return Color(.cyan)
-        case "Green":
-            return Color(.green)
-        case "Gray":
-            return Color(.gray)
-        case "Orange":
-            return Color(.orange)
-        case "Purple":
-            return Color(.purple)
-        default:
-            return Color(.red)
+    // helper function for viewmodel
+    func syncWithModel() {
+        score = game.score
+        cardDeck = game.cardDeck
+        gameLost = game.gameLost
+        gameWon = game.gameWon
+    }
+    
+    func choose(_ cardID: Int) {
+        if let indexOfCard = startingDeck.firstIndex(where: { $0.id == cardID }) {
+            startingDeck[indexOfCard].isSelected.toggle()
+            // debugging
+            print("Toggling isSelected on \(startingDeck[indexOfCard].id)")
         }
     }
     

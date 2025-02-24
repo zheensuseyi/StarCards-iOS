@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// FIXME: Make checkanswer actually work lol...
+// FIXME: Make this code a little cleaner
 struct ContentView: View {
     @ObservedObject var vm: SetCardGame
     var body: some View {
@@ -25,7 +25,8 @@ struct ContentView: View {
                 }
                 
                 Spacer()
-                Button(action: vm.addThreeCards) {
+                
+                Button(action: vm.checkAnswer) {
                     Label("Check Answer", systemImage: "checkmark.shield.fill") // SF Symbol
                 }
             }
@@ -39,17 +40,3 @@ struct ContentView: View {
     ContentView(vm: SetCardGame())
 }
 
-/*Button(action: {
-    // Action to perform when button is tapped
-    print("Custom button tapped!")
-}) {
-    HStack {
-        Image(systemName: "star.fill")
-        Text("Favorite")
-    }
-    .padding()
-    .background(Color.blue)
-    .foregroundColor(.white)
-    .cornerRadius(8)
-}
-*/

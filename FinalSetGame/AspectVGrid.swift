@@ -11,25 +11,22 @@ import SwiftUI
 struct AspectVGrid: View {
     @ObservedObject var vm: SetCardGame
    // @State private var isSelected: Bool = false
-    let columns = [GridItem(.flexible()), GridItem(.flexible())]
+    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     var body: some View {
         LazyVGrid(columns: columns) {
             ForEach(vm.startingDeck) { card in
                     Button(action: {
                         vm.choose(card.id)
-                    //    isSelected.toggle()
                     })
                     {
                     HStack {
                         ForEach(0..<card.numberOfShapes, id: \.self) { _ in
                             Image(systemName: "\(card.shape)")
                             // color of the shapes
-                                .foregroundStyle(vm.initalizeCardColor(color: card.color))
+                                .foregroundStyle(card.color.initalizeCardColor(card.color))
                         }
                     }
-                    // background of each card
-                    
-                    .background(vm.initalizeCardColor(color: card.shading))
+                    .background(card.shading.initalizeCardColor(card.shading))
                 }
                     .rotationEffect(.degrees(card.isSelected ? 180 : 0))
                     .animation(.linear(duration: 2).repeatForever(autoreverses: false), value: card.isSelected)
