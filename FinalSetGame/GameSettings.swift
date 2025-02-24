@@ -60,67 +60,22 @@ struct GameSettings {
     
     // FIXME: this function is a joke, make it better
     mutating func checkAnswer(_ deck: [Card]) -> Int {
-        var colorArray: [String] = []
-        var shapeArray: [String] = []
-        var numberArray: [Int] = []
-        var shadingArray: [String] = []
-        var maxColor = 0
-        var maxShape = 0
-        var maxNumber = 0
-        var maxShading = 0
-        
-        
-        for i in deck {
-            colorArray.append(i.color)
-            shapeArray.append(i.shape)
-            numberArray.append(i.numberOfShapes)
-            shadingArray.append(i.shading)
-        }
-        print(colorArray)
         var colorDict: [String: Int] = [:]
         var shapeDict: [String: Int] = [:]
         var numberDict: [Int: Int] = [:]
         var shadingDict: [String: Int] = [:]
-        
-        for color in colorArray {
-            colorDict[color, default: 0] += 1
-        }
-        for shape in shapeArray {
-            shapeDict[shape, default: 0] += 1
-        }
-        for number in numberArray {
-            numberDict[number, default: 0] += 1
-        }
-        for shading in shadingArray {
-            shadingDict[shading, default: 0] += 1
+   
+        for i in deck {
+            colorDict[i.color, default: 0] += 1
+            shapeDict[i.shape, default: 0] += 1
+            numberDict[i.numberOfShapes, default: 0] += 1
+            shadingDict[i.shading, default: 0] += 1
         }
         
-        let colorValues = Array(colorDict.values)
-        let shapeValues = Array(shapeDict.values)
-        let numberValues = Array(numberDict.values)
-        let shadingValues = Array(shadingDict.values)
-  
-
-        for i in colorValues {
-            if i > maxColor {
-                maxColor = i
-            }
-        }
-        for i in shapeValues {
-            if i > maxShape {
-                maxShape = i
-            }
-        }
-        for i in numberValues {
-            if i > maxNumber {
-                maxNumber = i
-            }
-        }
-        for i in shadingValues {
-            if i > maxShading {
-                maxShading = i
-            }
-        }
+        let maxColor: Int = colorDict.max { $0.value < $1.value}!.value
+        let maxShape: Int = shapeDict.max { $0.value < $1.value}!.value
+        let maxNumber: Int = shapeDict.max { $0.value < $1.value}!.value
+        let maxShading: Int = shadingDict.max { $0.value < $1.value}!.value
 
         let totalSum = [maxColor, maxShape, maxNumber, maxShading]
         print(totalSum)
