@@ -7,17 +7,18 @@
 
 import Foundation
 import SwiftUI
+// extension to turn a string into a color!
 extension String {
     func initalizeCardColor(_ color: String) -> Color {
         switch color {
         case "Red":
             return Color(.red)
-        case "Cyan":
-            return Color(.cyan)
+        case "Yellow":
+            return Color(.yellow)
+        case "Blue":
+            return Color(.blue)
         case "Green":
             return Color(.green)
-        case "Gray":
-            return Color(.gray)
         case "Orange":
             return Color(.orange)
         case "Purple":

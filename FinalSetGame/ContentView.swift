@@ -16,25 +16,33 @@ struct ContentView: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
             Text("Score: \(vm.score)")
+                .foregroundColor(.cyan)
+                .fontWeight(.bold)
             ScrollView {
                 AspectVGrid(vm: vm)
             }
             HStack {
-                Button(action: vm.addThreeCards) {
-                    Label("Add Cards", systemImage: "plus.app.fill") // SF Symbol
-                }
-                
-                Spacer()
-                
-                Button(action: vm.checkAnswer) {
-                    Label("Check Answer", systemImage: "checkmark.shield.fill") // SF Symbol
-                }
+                buttons(vm: vm)
             }
             .font(.title2)
         }
         .padding()
     }
 }
+
+
+
+
+
+struct buttons: View {
+    @ObservedObject var vm: SetCardGame
+    var body: some View {
+        Button(action: vm.addThreeCards) {
+            Label("Add Cards", systemImage: "plus.app.fill") // SF Symbol
+        }
+    }
+}
+
 
 #Preview {
     ContentView(vm: SetCardGame())

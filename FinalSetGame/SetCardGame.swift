@@ -7,81 +7,60 @@
 
 import SwiftUI
 
-// FIXME: Maybe move startingDeck to the model, figure out how to call alerts. 
+// FIXME: Fix alerts, see model
 class SetCardGame: ObservableObject {
     @Published var game = GameSettings()
-    @Published var cardDeck: [GameSettings.Card] = []
-    @Published var score: Int = 0
-    @Published var gameLost: Bool = false
-    @Published var gameWon: Bool = false
-    @Published var startingDeck: [GameSettings.Card] = []
     
-    init() {
-        score = game.score
-        gameLost = game.gameLost
-        gameWon = game.gameWon
-        cardDeck = game.initalizeDeck()
-        startingDeck = game.addAndRemoveCards(numberOfCards: 6)
+    var score: Int {
+        return game.score
+    }
+    var gameDeck: [GameSettings.Card] {
+        return game.gameDeck
     }
     
-    var gameLostAlert: Alert {
-        Alert(title: Text("Game Over"), message: Text("Better luck next time.... Try again?"), dismissButton: .default(Text("Dismiss")))
+    private var fullDeck: [GameSettings.Card] {
+        return game.fullDeck
     }
-    var gameWinAlert: Alert {
-        Alert(title: Text("You found a set!"), message: Text("You won! Your final score was \(score)"), dismissButton: .default(Text("Dismiss")))
+    var gameLost: Bool {
+        return game.gameLost
     }
-    
-    
-    // MARK: functions that call model functions
+    var gameWon: Bool {
+        return game.gameWon
+    }
     
     // adds 3 cards
     func addThreeCards() {
-        let tempDeck = game.addAndRemoveCards(numberOfCards: 3)
-        for i in tempDeck {
-            startingDeck.append(i)
-        }
-        cardDeck = game.cardDeck
-        score -= 3
+        game.addCards()
     }
     // checks Answer
     func checkAnswer(){
         var deckToSend: [GameSettings.Card] = []
-        for i in startingDeck {
-            if i.isSelected {
-                deckToSend.append(i)
+        for card in gameDeck {
+            if card.isSelected {
+                deckToSend.append(card)
             }
         }
-        print("Number of cards sent: \(deckToSend.count)")
-        score = game.checkAnswer(deckToSend)
-        if score < 0 {
-            print("You LOST")
-        }
-        else if score > 100 {
-            print("you WON")
+        print("Number of cards in deck: \(deckToSend.count)")
+        if deckToSend.count == 3 {
+            game.checkAnswer(deckToSend)
         }
     }
     
-    // FIXME: Test these functions
     // function for new game
     func newGame() {
         game.newGame()
-        syncWithModel()
     }
     
-    // helper function for viewmodel
-    func syncWithModel() {
-        score = game.score
-        cardDeck = game.cardDeck
-        gameLost = game.gameLost
-        gameWon = game.gameWon
+    func cardTapped(_ cardID: Int) {
+        game.cardTapped(cardID)
     }
     
-    func choose(_ cardID: Int) {
-        if let indexOfCard = startingDeck.firstIndex(where: { $0.id == cardID }) {
-            startingDeck[indexOfCard].isSelected.toggle()
-            // debugging
-            print("Toggling isSelected on \(startingDeck[indexOfCard].id)")
-        }
+    // FIXME: Probably move these somewhere else
+    var gameLostAlert: Alert {
+        Alert(title: Text("Game Over"), message: Text("Better luck next time.... Try again?"), dismissButton: .default(Text("Dismiss")))
+    }
+    var gameWonAlert: Alert {
+        Alert(title: Text("You found a set!"), message: Text("You won! Your final score was \(score)"), dismissButton: .default(Text("Dismiss")))
     }
     
 }
