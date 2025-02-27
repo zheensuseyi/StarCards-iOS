@@ -29,3 +29,13 @@ extension String {
     }
 }
 
+// FIXME: add some ViewModifers to make our code cleaner
+/*
+extension ViewModifier {
+    var gameRulesHeadLineText: ViewModifier {
+        .font(.title2)
+        .fontWeight(.bold)
+    }
+}
+
+*/

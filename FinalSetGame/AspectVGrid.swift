@@ -9,40 +9,32 @@ import SwiftUI
 
 // FIXME: Fix the animations and alerts
 struct AspectVGrid: View {
-    @ObservedObject var vm: SetCardGame
-    // initalizing 3 flexible columns for our lazyvgrid
+    @ObservedObject var vm: SetCardGame // getting our viewmodel
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     var body: some View {
-        // putting all items in a grid aligned vertically
-        LazyVGrid(columns: columns) {
-            // iterating through our deck, making each item a button and rendering them for the user
+        LazyVGrid(columns: columns) {  // putting all items in a grid aligned vertically
+            // iterating through our deck, rendering each item for the user
             ForEach(vm.gameDeck) { card in
-                // button applied to each card that will toggle two viewmodel functions
-                Button(action: { 
-                    // toggles isSelected
+                Button(action: { // button applied to each card that will toggle two viewmodel functions
                     vm.cardTapped(card.id)
-                    // if 3 cards are selected, checks the answer, returns the score, then deselects the cards
                     vm.checkAnswer()
-                    
                 })
                 {
+                    // rendering our cards for the user
                     VStack {
-                        // rendering our cards for the user
                         ForEach(0..<card.numberOfShapes, id: \.self) { _ in
-                            Image(systemName: "\(card.shape)")
-                            // color of the shapes
+                            Image(systemName: "\(card.shape)") // color of the shapes
                                 .foregroundStyle(card.color.initalizeCardColor(card.color))
                         }
                     }
-                    // background color is applied here, along with an animation when the card is selected
+                    // background color
                     .background(card.bgColor.initalizeCardColor(card.bgColor))
+                    // rotational effect with animation
                     .rotationEffect(.degrees(card.isSelected ? 360 : 0))
                     .animation(.linear(duration: 2).repeatForever(autoreverses: false), value: card.isSelected)
-                    // makes the cards bigger and more readable
+                    // making the cards bigger and more readable
                     .font(.largeTitle)
                 }
-                
-               
             }
             .padding()
         }

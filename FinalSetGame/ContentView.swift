@@ -11,24 +11,24 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var vm: SetCardGame
     var body: some View {
-        VStack {
-            Text("Find A Set!")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            Text("Score: \(vm.score)")
-                .foregroundColor(.cyan)
-                .fontWeight(.bold)
-            ScrollView {
-                AspectVGrid(vm: vm)
-            }
-            HStack {
+        NavigationStack {
+            VStack {
+                Text("Find A Set!")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                Text("Score: \(vm.score)")
+                    .foregroundColor(.cyan)
+                    .fontWeight(.bold)
+                ScrollView {
+                    AspectVGrid(vm: vm)
+                }
                 buttons(vm: vm)
             }
-            .font(.title2)
+            .padding()
         }
-        .padding()
     }
 }
+
 
 
 
@@ -37,11 +37,19 @@ struct ContentView: View {
 struct buttons: View {
     @ObservedObject var vm: SetCardGame
     var body: some View {
-        Button(action: vm.addThreeCards) {
-            Label("Add Cards", systemImage: "plus.app.fill") // SF Symbol
+            HStack {
+                Button(action: vm.addThreeCards) {
+                    Label("Add Cards", systemImage: "plus.app.fill") // SF Symbol
+                }
+                Spacer()
+                NavigationLink(destination: GamesRulesView()) {
+                    Label("Game Rules", systemImage: "questionmark.circle.fill") // SF Symbol
+                }
+            }
+            .font(.title2)
         }
     }
-}
+
 
 
 #Preview {

@@ -15,6 +15,7 @@
 		ADD5B4C92D601461000587E3 /* SetCardGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5B4C82D601461000587E3 /* SetCardGame.swift */; };
 		ADD5B4CD2D63FFC4000587E3 /* AspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5B4CC2D63FFC4000587E3 /* AspectVGrid.swift */; };
 		ADD5B4CF2D6BD58A000587E3 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5B4CE2D6BD58A000587E3 /* Extensions.swift */; };
+		ADD5B4D42D6FD548000587E3 /* GamesRulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD5B4D32D6FD548000587E3 /* GamesRulesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		ADD5B4C82D601461000587E3 /* SetCardGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardGame.swift; sourceTree = "<group>"; };
 		ADD5B4CC2D63FFC4000587E3 /* AspectVGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectVGrid.swift; sourceTree = "<group>"; };
 		ADD5B4CE2D6BD58A000587E3 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		ADD5B4D32D6FD548000587E3 /* GamesRulesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesRulesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,9 +61,10 @@
 		ADD5B4B72D6013F1000587E3 /* FinalSetGame */ = {
 			isa = PBXGroup;
 			children = (
-				ADD5B4B82D6013F1000587E3 /* FinalSetGameApp.swift */,
 				ADD5B4BA2D6013F1000587E3 /* ContentView.swift */,
 				ADD5B4CC2D63FFC4000587E3 /* AspectVGrid.swift */,
+				ADD5B4D32D6FD548000587E3 /* GamesRulesView.swift */,
+				ADD5B4B82D6013F1000587E3 /* FinalSetGameApp.swift */,
 				ADD5B4C82D601461000587E3 /* SetCardGame.swift */,
 				ADD5B4C62D60140B000587E3 /* GameSettings.swift */,
 				ADD5B4CE2D6BD58A000587E3 /* Extensions.swift */,
@@ -154,6 +157,7 @@
 				ADD5B4BB2D6013F1000587E3 /* ContentView.swift in Sources */,
 				ADD5B4CD2D63FFC4000587E3 /* AspectVGrid.swift in Sources */,
 				ADD5B4B92D6013F1000587E3 /* FinalSetGameApp.swift in Sources */,
+				ADD5B4D42D6FD548000587E3 /* GamesRulesView.swift in Sources */,
 				ADD5B4C72D60140B000587E3 /* GameSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
