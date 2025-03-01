@@ -19,54 +19,62 @@ class SetCardGame: ObservableObject {
     var gameDeck: [GameSettings.Card] {
         return game.gameDeck
     }
-    
+
     private var fullDeck: [GameSettings.Card] {
         return game.fullDeck
     }
-    var gameLost: Bool {
-        return game.gameLost
-    }
-    var gameWon: Bool {
-        return game.gameWon
+    
+    @Published var gameLost: Bool = false
+    @Published var gameWon: Bool = false
+    init() {
+        syncWithModel()
     }
     
-    // function for card getting tapped (toggles isSelected)
+    // MARK: Functions
+    
     func cardTapped(_ cardID: Int) {
         game.cardTapped(cardID)
     }
     
-    // function that checks answer
-    func checkAnswer(){
-        // any card that has isSelected will be added to this deck
+    func checkAnswer() {
         var deckToSend: [GameSettings.Card] = []
         for card in gameDeck {
             if card.isSelected {
                 deckToSend.append(card)
             }
         }
-        print("Number of cards in deck: \(deckToSend.count)")
-        // if deckToSend has 3 cards in it, then check the answer, otherwise this function does nothing
+        print("Number of cards in deck: \(deckToSend.count)") // for debugging
         if deckToSend.count == 3 {
             game.checkAnswer(deckToSend)
         }
+        syncWithModel()
+    }
+    
+    func addThreeCards() {
+        game.addCards()
+        syncWithModel()
     }
     
     // function that starts a new game, will add back in with alert
-  /*  func newGame() {
+    func newGame() {
         game.newGame()
-    }*/
-    
-    // function that adds 3 cards
-    func addThreeCards() {
-        game.addCards()
+        syncWithModel()
+    }
+
+    func syncWithModel() {
+        gameLost = game.gameLost
+        gameWon = game.gameWon
     }
     
     // FIXME: Probably move these somewhere else
     var gameLostAlert: Alert {
-        Alert(title: Text("Game Over"), message: Text("Better luck next time.... Try again?"), dismissButton: .default(Text("Dismiss")))
+        Alert(title: Text("Game Over"), message: Text("Better luck next time.... Try again?"), dismissButton: .default(Text("Try again?"), action: { [self] in newGame()}))
     }
     var gameWonAlert: Alert {
-        Alert(title: Text("You found a set!"), message: Text("You won! Your final score was \(score)"), dismissButton: .default(Text("Dismiss")))
+        Alert(title: Text("You found a set!"), message: Text("You won! Your final score was \(score)"), dismissButton: .default(Text("Play again?"), action: { [self] in newGame()}))
+    }
+    var incorrectGuessAlert: Alert {
+        Alert(title: Text("Incorrect"), message: Text("You just lost 9 points"), dismissButton: .default(Text("Dismiss")))
     }
     
 }

@@ -8,8 +8,38 @@
 import Foundation
 import SwiftUI
 // extension to turn a string into a color!
+let myShapes: [Image] = [Image(systemName: "triangle.fill"), Image(systemName: "circle.fill"), Image(systemName: "star.fill")]
+struct Title2Modifer: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.title2)
+            .fontWeight(.bold)
+    }
+}
+struct LargeTitleModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.largeTitle)
+            .fontWeight(.bold)
+    }
+}
+
+
+
+
+extension View {
+    public func title2Bold() -> some View {
+        modifier(Title2Modifer())
+    }
+}
+extension View {
+    public func largeTitleBold() -> some View {
+        modifier(LargeTitleModifier())
+    }
+}
+
 extension String {
-    func initalizeCardColor(_ color: String) -> Color {
+    public func initalizeCardColor(_ color: String) -> Color {
         switch color {
         case "Red":
             return Color(.red)
@@ -28,6 +58,7 @@ extension String {
         }
     }
 }
+
 
 // FIXME: add some ViewModifers to make our code cleaner
 /*
