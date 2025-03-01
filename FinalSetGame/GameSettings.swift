@@ -59,9 +59,9 @@ struct GameSettings {
         let maxShape: Int = shapeDict.max { $0.value < $1.value}!.value
         let maxNumShapes: Int = shapeDict.max { $0.value < $1.value}!.value
         let maxBGColor: Int = bgColorDict.max { $0.value < $1.value}!.value
-        
         // putting them all in an array
         let totalSum = [maxShape, maxColor, maxNumShapes, maxBGColor]
+        
         // now finding out if its a set or not
         findSet(totalSum)
     }
@@ -71,22 +71,19 @@ struct GameSettings {
         for freq in totalSum {
             if freq == 2 { // if it isnt a set, deduct 9 points and return the score
                 score -= 9
-                gameLost = scoreCheck()
+                scoreCheck()
                 return
             }
         }
         gameWon = true
         return
     }
-    mutating func scoreCheck() -> Bool {
+    mutating func scoreCheck() {
         if score < 1 {
             gameLost = true
         }
-        return gameLost
     }
 
-    
-    // another helper function for checkAnswer
     mutating func deselectCards() {
         for card in 0..<gameDeck.count {
             if gameDeck[card].isSelected {
@@ -95,18 +92,18 @@ struct GameSettings {
             }
         }
     }
+    
+    
     mutating func addCards() -> () {
         for i in 0..<3 {
             gameDeck.append(fullDeck[i])
         }
         score -= 3
-        gameLost = scoreCheck()
+        scoreCheck()
         fullDeck.removeFirst(3) // deleting cards from full deck, so all cards are unique
         return
     }
     
-    
-    // FIXME: figure out what to do with gameWon and gameLost. Maybe combine both?
     mutating func newGame() {
         fullDeck = initalizeFullDeck()
         gameDeck = initalizeGameDeck()
@@ -115,7 +112,8 @@ struct GameSettings {
         gameWon = false
     }
     
-    // helper function to initalize cardDeck
+    
+    // MARK: Helper functions for initalizing decks
     mutating func initalizeFullDeck() -> [Card] {
         var tempDeck: [Card] = []
         var idCounter = 0
@@ -132,8 +130,6 @@ struct GameSettings {
         return tempDeck.shuffled()
     }
     
-    
-    // helper function to initalize gameDeck
     mutating func initalizeGameDeck() -> [Card]{
         var tempDeck: [Card] = []
         for i in 0...11 {

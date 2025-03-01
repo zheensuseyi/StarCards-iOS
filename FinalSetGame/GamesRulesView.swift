@@ -27,22 +27,7 @@ struct GamesRulesView: View {
             .padding()
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
     // MARK: every text view
     
@@ -58,6 +43,7 @@ struct GamesRulesView: View {
             }
         }
     }
+    
     struct partTwo: View {
         var body: some View {
             HStack {
@@ -85,6 +71,7 @@ struct GamesRulesView: View {
                 .padding()
         }
     }
+    
     struct partThree: View {
         var body: some View {
             Text("Finding A Set")
@@ -98,6 +85,7 @@ struct GamesRulesView: View {
                 .padding()
         }
     }
+    
     struct partFour: View {
         var body: some View {
             Text("Scoring")
