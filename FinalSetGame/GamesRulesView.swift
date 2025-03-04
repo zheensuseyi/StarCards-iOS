@@ -24,8 +24,8 @@ struct GamesRulesView: View {
                     partThree()
                     partFour()
                 })
-                .foregroundColor(.black)
             }
+            .foregroundColor(.black)
             .font(.headline)
             .padding()
         }
