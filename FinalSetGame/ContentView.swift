@@ -11,54 +11,48 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var vm: SetCardGame
     var body: some View {
-        NavigationStack {
-            VStack {
-                titleAndScore(score: vm.score)
-                ScrollView {
-                    AspectVGrid(vm: vm)
+            NavigationStack {
+                ZStack {
+                    backgroundGradient()
+                VStack {
+                    titleAndScore(score: vm.score)
+                    ScrollView {
+                        AspectVGrid(vm: vm)
+                    }
+                    buttons(vm: vm)
                 }
-                buttons(vm: vm)
+                .padding()
             }
-            .padding()
         }
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
     // MARK: helper views to make contentview look cleaner
-    
-    struct titleAndScore: View {
+    private struct titleAndScore: View {
         let score: Int
         var body: some View {
             Text("Set Card Game")
                 .largeTitleBold()
             Text("Score: \(score)")
-                .foregroundColor(.cyan)
+                .foregroundColor(.pink)
                 .fontWeight(.bold)
         }
     }
     
-    struct buttons: View {
+    private struct buttons: View {
         @ObservedObject var vm: SetCardGame
         var body: some View {
             HStack {
                 Button("Add Cards \(Image(systemName: "plus.app.fill"))") {
                     vm.addThreeCards()
                 }
-                .alert(isPresented: $vm.gameLost) {
-                    vm.gameLostAlert
-                }
                 Spacer()
-                NavigationLink(destination: GamesRulesView()) {
-                    Label("Game Rules", systemImage: "questionmark.circle.fill") // SF Symbol
+                NavigationLink(destination: GamesRulesView(vm: vm)) {
+                    Label("Game Rules", systemImage: "questionmark.circle.fill")
                 }
+            }
+            .alert(isPresented: $vm.gameOver) {
+                vm.gameOverAlert
             }
             .font(.title2)
         }

@@ -9,15 +9,18 @@ import SwiftUI
 
 // FIXME: add extentions so that the code looks cleaner, maybe add another struct for all this text?
 struct GamesRulesView: View {
+    @ObservedObject var vm: SetCardGame
     var body: some View {
+        ZStack {
+            backgroundGradient()
         VStack {
             Text("Game Rules")
                 .largeTitleBold()
             Spacer()
             ScrollView {
                 VStack(alignment: .center, content: {
-                    partOne()
-                    partTwo()
+                    partOne(vm: vm)
+                    partTwo(vm: vm)
                     partThree()
                     partFour()
                 })
@@ -27,52 +30,57 @@ struct GamesRulesView: View {
             .padding()
         }
     }
+}
 
     
     // MARK: every text view
     
-    struct partOne: View {
+    private struct partOne: View {
+        @ObservedObject var vm: SetCardGame
         var body: some View {
-            Text("Each Card Has 4 Characteristics With 3 Different Attributes")
+            Text("Each Card Has 4 Characteristics")
+                .title2Bold()
+            Text("With 3 Different Attributes")
                 .title2Bold()
             Spacer()
-            Text("1. Shape \(myShapes[0]) \(myShapes[1]) \(myShapes[2])")
+            Text("1. Shape \(vm.Star) \(vm.Triangle) \(vm.Circle)")
             HStack {
                 Text("2. Number Of Shapes")
-                Text("\(myShapes[1]) | \(myShapes[1]) \(myShapes[1]) | \(myShapes[1]) \(myShapes[1]) \(myShapes[1])")
+                Text("\(vm.Circle) | \(vm.Circle) \(vm.Circle) | \(vm.Circle) \(vm.Circle) \(vm.Circle)")
             }
         }
     }
     
-    struct partTwo: View {
+    private struct partTwo: View {
+        @ObservedObject var vm: SetCardGame
         var body: some View {
             HStack {
                 Text("3. Shape Color")
-                Text("\(myShapes[2])")
+                Text("\(vm.Star)")
                     .foregroundColor(.red)
-                Text("\(myShapes[2])")
+                Text("\(vm.Star)")
                     .foregroundColor(.yellow)
-                Text("\(myShapes[2])")
+                Text("\(vm.Star)")
                     .foregroundColor(.blue)
             }
             HStack {
                 Text("4. Background Color")
-                Text("\(myShapes[0])")
+                Text("\(vm.Triangle)")
                     .background(.green)
-                Text("\(myShapes[0])")
+                Text("\(vm.Triangle)")
                     .background(.orange)
-                Text("\(myShapes[0])")
+                Text("\(vm.Triangle)")
                     .background(.purple)
             }
             Spacer()
-            Text("All 81 cards in the deck are unique\n")
+            Text("All 81 cards in the deck are unique")
                 .fontWeight(.bold)
             Spacer()
                 .padding()
         }
     }
     
-    struct partThree: View {
+    private struct partThree: View {
         var body: some View {
             Text("Finding A Set")
                 .title2Bold()
@@ -80,18 +88,22 @@ struct GamesRulesView: View {
             Text("A set is defined as 3 selected cards where each of its attributes are either")
             Text("a. All The Same or b. All Different")
                 .fontWeight(.bold)
-            Text("In order to check your answer, tap on any 3 cards\nDeselect cards by tapping again\n")
+            Text("In order to check your answer, tap on any 3 cards")
+            Text("Deselect cards by tapping again")
             Spacer()
                 .padding()
         }
     }
     
-    struct partFour: View {
+    private struct partFour: View {
         var body: some View {
             Text("Scoring")
                 .title2Bold()
             Spacer()
-            Text("You lose 3 points if you add 3 more cards\nYou lose 9 points on an inncorrect guess\nIf your score is 0, the game is lost\nIf you find a set, you WIN!")
+            Text("You lose 3 points if you add 3 more cards")
+            Text("You lose 9 points on an inncorrect guess")
+            Text("If your score is 0, the game is lost")
+            Text("If you find a set, you WIN!")
         }
     }
 }
@@ -100,5 +112,5 @@ struct GamesRulesView: View {
 
 
 #Preview {
-    GamesRulesView()
+    GamesRulesView(vm: SetCardGame())
 }

@@ -8,46 +8,51 @@
 import SwiftUI
 
 // FIXME: Fix the animations and alerts
-struct AspectVGrid: View {
-    @ObservedObject var vm: SetCardGame // getting our viewmodel
-    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
-    @State private var gameLost: Bool = false
-    @State private var gameWon: Bool = false
+struct AspectVGrid: View, Animatable {
+    @ObservedObject var vm: SetCardGame
+  /*  var rotation: Double
+    var isSelected: Bool {
+        rotation < 90
+    }
     
-
+    var animatableData: Double {
+        get { rotation}
+        set { rotation = newValue }
+    }
+   */
+    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     var body: some View {
-        LazyVGrid(columns: columns) {  // putting all items in a grid aligned vertically
-            // iterating through our deck, rendering each item for the user
+        LazyVGrid(columns: columns) {
             ForEach(vm.gameDeck) { card in
                 Button(action: {
                     vm.cardTapped(card.id)
                     vm.checkAnswer()                    
                 })
                 {
-                    // rendering our cards for the user
                     VStack {
                         ForEach(0..<card.numberOfShapes, id: \.self) { _ in
-                            Image(systemName: "\(card.shape)") // color of the shapes
-                                .foregroundStyle(card.color.initalizeCardColor(card.color))
+                            vm.initalizeCardShape(card.shape)
+                                .foregroundStyle(vm.initalizeCardColor(card.color))
                         }
                     }
-                    .background(card.bgColor.initalizeCardColor(card.bgColor))
+                    .background(vm.initalizeCardColor(card.bgColor))
                     .rotationEffect(.degrees(card.isSelected ? 360 : 0))
-                    .animation(.linear(duration: 2).repeatForever(autoreverses: false), value: card.isSelected)
+                    .animation(Animation.default.rotate(card.isSelected), value: card.isSelected)
                 }
-                .alert(isPresented: $vm.gameLost) {
-                    vm.gameLostAlert
+                .alert(isPresented: $vm.gameOver) {
+                    vm.gameOverAlert
                 }
-                .alert(isPresented: $vm.gameWon) {
-                    vm.gameWonAlert
+                .alert(isPresented: $vm.incorrectGuess) {
+                    vm.incorrectGuessAlert
                 }
-            
+
             }
             .font(.largeTitle)
             .padding()
         }
     }
 }
+
 
 #Preview {
     AspectVGrid(vm: SetCardGame())

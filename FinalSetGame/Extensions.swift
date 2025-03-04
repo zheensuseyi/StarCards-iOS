@@ -7,8 +7,8 @@
 
 import Foundation
 import SwiftUI
+
 // extension to turn a string into a color!
-let myShapes: [Image] = [Image(systemName: "triangle.fill"), Image(systemName: "circle.fill"), Image(systemName: "star.fill")]
 struct Title2Modifer: ViewModifier {
     func body(content: Content) -> some View {
         content
@@ -16,6 +16,13 @@ struct Title2Modifer: ViewModifier {
             .fontWeight(.bold)
     }
 }
+
+extension View {
+    public func title2Bold() -> some View {
+        modifier(Title2Modifer())
+    }
+}
+
 struct LargeTitleModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
@@ -24,49 +31,34 @@ struct LargeTitleModifier: ViewModifier {
     }
 }
 
-
-
-
-extension View {
-    public func title2Bold() -> some View {
-        modifier(Title2Modifer())
-    }
-}
 extension View {
     public func largeTitleBold() -> some View {
         modifier(LargeTitleModifier())
     }
 }
 
-extension String {
-    public func initalizeCardColor(_ color: String) -> Color {
-        switch color {
-        case "Red":
-            return Color(.red)
-        case "Yellow":
-            return Color(.yellow)
-        case "Blue":
-            return Color(.blue)
-        case "Green":
-            return Color(.green)
-        case "Orange":
-            return Color(.orange)
-        case "Purple":
-            return Color(.purple)
-        default:
-            return Color(.red)
+/*struct BackgroundModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .background(content: { LinearGradient(gradient: Gradient(colors: [.cyan, .white]), startPoint: .top, endPoint: .bottom) })
+            .ignoresSafeArea()
+    }
+}*/
+extension View {
+    public func backgroundGradient() -> some View {
+        LinearGradient(gradient: Gradient(colors: [.cyan, .white]), startPoint: .top, endPoint: .bottom)
+            .ignoresSafeArea()
+    }
+}
+
+
+extension Animation {
+    func rotate(_ isSelected: Bool) -> Animation {
+        if isSelected {
+            return Animation.linear(duration: 1).repeatForever(autoreverses: false)
+        }
+        else {
+            return self
         }
     }
 }
-
-
-// FIXME: add some ViewModifers to make our code cleaner
-/*
-extension ViewModifier {
-    var gameRulesHeadLineText: ViewModifier {
-        .font(.title2)
-        .fontWeight(.bold)
-    }
-}
-
-*/
