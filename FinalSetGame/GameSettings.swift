@@ -153,7 +153,7 @@ struct GameSettings {
                 }
             }
         }
-        return tempDeck
+        return tempDeck.shuffled()
     }
     
     // helper function for initalizing game deck
