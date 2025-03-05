@@ -10,7 +10,7 @@ import SwiftUI
 // FIXME: Fix alerts, see model
 class SetCardGame: ObservableObject {
     // our model, initalized here
-    @Published var game = GameSettings()
+    private var game = GameSettings()
     
     // MARK: model variables
     var score: Int {
