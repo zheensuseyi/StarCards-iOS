@@ -13,25 +13,23 @@ struct GamesRulesView: View {
     var body: some View {
         ZStack {
             backgroundGradient()
-        VStack {
-            Text("Game Rules")
-                .largeTitleBold()
-            Spacer()
-            ScrollView {
+            VStack {
+                Text("Game Rules")
+                    .largeTitleBold()
                 VStack(alignment: .center, content: {
                     partOne(vm: vm)
                     partTwo(vm: vm)
                     partThree()
                     partFour()
                 })
+                .padding()
+                .foregroundColor(.black)
+                .font(.headline)
             }
-            .foregroundColor(.black)
-            .font(.headline)
-            .padding()
         }
     }
-}
-
+               
+    
     
     // MARK: every text view
     
@@ -42,7 +40,6 @@ struct GamesRulesView: View {
                 .title2Bold()
             Text("With 3 Different Attributes")
                 .title2Bold()
-            Spacer()
             Text("1. Shape \(vm.Star) \(vm.Triangle) \(vm.Circle)")
             HStack {
                 Text("2. Number Of Shapes")
@@ -72,11 +69,9 @@ struct GamesRulesView: View {
                 Text("\(vm.Triangle)")
                     .background(.purple)
             }
-            Spacer()
             Text("All 81 cards in the deck are unique")
                 .fontWeight(.bold)
             Spacer()
-                .padding()
         }
     }
     
@@ -84,14 +79,13 @@ struct GamesRulesView: View {
         var body: some View {
             Text("Finding A Set")
                 .title2Bold()
-            Spacer()
             Text("A set is defined as 3 selected cards where each of its attributes are either")
             Text("a. All The Same or b. All Different")
                 .fontWeight(.bold)
             Text("In order to check your answer, tap on any 3 cards")
             Text("Deselect cards by tapping again")
             Spacer()
-                .padding()
+            
         }
     }
     
@@ -99,7 +93,6 @@ struct GamesRulesView: View {
         var body: some View {
             Text("Scoring")
                 .title2Bold()
-            Spacer()
             Text("You lose 3 points if you add 3 more cards")
             Text("You lose 9 points on an inncorrect guess")
             Text("If your score is 0, the game is lost")

@@ -21,6 +21,7 @@ struct ContentView: View {
                     }
                     buttons(vm: vm)
                 }
+                .scrollIndicators(.hidden)
                 .padding()
             }
         }
