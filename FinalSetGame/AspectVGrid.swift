@@ -4,22 +4,12 @@
 //
 //  Created by Zheen Suseyi on 2/17/25.
 //
- 
+
 import SwiftUI
 
 // FIXME: Fix the animations and alerts
 struct AspectVGrid: View, Animatable {
     @ObservedObject var vm: SetCardGame
-  /*  var rotation: Double
-    var isSelected: Bool {
-        rotation < 90
-    }
-    
-    var animatableData: Double {
-        get { rotation}
-        set { rotation = newValue }
-    }
-   */
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     var body: some View {
         LazyVGrid(columns: columns) {
@@ -45,7 +35,7 @@ struct AspectVGrid: View, Animatable {
                 .alert(isPresented: $vm.incorrectGuess) {
                     vm.incorrectGuessAlert
                 }
-
+                
             }
             .font(.largeTitle)
             .padding()

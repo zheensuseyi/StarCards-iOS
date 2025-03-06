@@ -24,14 +24,14 @@ struct GameSettings {
             self.bgColor = bgColor
         }
     }
-
+    
     // MARK: Game variables
     private(set) var fullDeck: [Card] = []
     private(set) var gameDeck: [Card] = []
     private(set) var score = 63
     private(set) var gameOver = false
     private(set) var incorrectGuess = false
-
+    
     
     // initalizing decks
     init() {
@@ -119,7 +119,7 @@ struct GameSettings {
     mutating func resetGuess() {
         incorrectGuess = false
     }
-
+    
     // helper function that deselects all the selected cards in the deck
     mutating func deselectCards() {
         for card in 0..<gameDeck.count {

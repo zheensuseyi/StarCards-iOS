@@ -12,9 +12,9 @@ struct GamesRulesView: View {
     @ObservedObject var vm: SetCardGame
     var body: some View {
         ZStack {
-            backgroundGradient()
+            dayTimeGradient()
             VStack {
-                Text("Game Rules")
+                Text("Game Rules🌤️")
                     .largeTitleBold()
                 VStack(alignment: .center, content: {
                     partOne(vm: vm)
@@ -22,13 +22,14 @@ struct GamesRulesView: View {
                     partThree()
                     partFour()
                 })
+                .foregroundStyle(.black)
                 .padding()
-                .foregroundColor(.black)
-                .font(.headline)
+                .font(.system(size: 18))
+                .fontWeight(.light)
             }
         }
     }
-               
+    
     
     
     // MARK: every text view
@@ -36,6 +37,7 @@ struct GamesRulesView: View {
     private struct partOne: View {
         @ObservedObject var vm: SetCardGame
         var body: some View {
+            
             Text("Each Card Has 4 Characteristics")
                 .title2Bold()
             Text("With 3 Different Attributes")
@@ -85,7 +87,6 @@ struct GamesRulesView: View {
             Text("In order to check your answer, tap on any 3 cards")
             Text("Deselect cards by tapping again")
             Spacer()
-            
         }
     }
     

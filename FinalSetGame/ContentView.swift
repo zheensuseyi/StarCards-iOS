@@ -11,9 +11,9 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var vm: SetCardGame
     var body: some View {
-            NavigationStack {
-                ZStack {
-                    backgroundGradient()
+        NavigationStack {
+            ZStack {
+                nightTimeGradient()
                 VStack {
                     titleAndScore(score: vm.score)
                     ScrollView {
@@ -27,16 +27,15 @@ struct ContentView: View {
         }
     }
     
-    
     // MARK: helper views to make contentview look cleaner
     private struct titleAndScore: View {
         let score: Int
         var body: some View {
-            Text("Set Card Game")
+            Text("Sky Cards✨")
                 .largeTitleBold()
             Text("Score: \(score)")
-                .foregroundColor(.pink)
-                .fontWeight(.bold)
+                .foregroundStyle(Color.starYellow)
+                .fontWeight(.medium)
         }
     }
     
@@ -47,10 +46,12 @@ struct ContentView: View {
                 Button("Add Cards \(Image(systemName: "plus.app.fill"))") {
                     vm.addThreeCards()
                 }
+                .foregroundStyle(.white)
                 Spacer()
                 NavigationLink(destination: GamesRulesView(vm: vm)) {
                     Label("Game Rules", systemImage: "questionmark.circle.fill")
                 }
+                .foregroundStyle(.white)
             }
             .alert(isPresented: $vm.gameOver) {
                 vm.gameOverAlert

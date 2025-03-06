@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-// extension to turn a string into a color!
+// title 2 modifier
 struct Title2Modifer: ViewModifier {
     func body(content: Content) -> some View {
         content
@@ -17,41 +17,41 @@ struct Title2Modifer: ViewModifier {
     }
 }
 
+// large title modifier
+struct LargeTitleModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .foregroundStyle(.white)
+            .font(.largeTitle)
+            .fontWeight(.light)
+    }
+}
+
+
+// view extensions
 extension View {
+    public func dayTimeGradient() -> some View {
+        LinearGradient(gradient: Gradient(colors: [.cyan, .white]), startPoint: .top, endPoint: .bottom)
+            .ignoresSafeArea()
+    }
+    public func nightTimeGradient() -> some View {
+        return LinearGradient(gradient: Gradient(colors: [.darkBlue, .indigo]), startPoint: .top, endPoint: .bottom)
+            .ignoresSafeArea()
+    }
+    public func largeTitleBold() -> some View {
+        modifier(LargeTitleModifier())
+    }
     public func title2Bold() -> some View {
         modifier(Title2Modifer())
     }
 }
 
-struct LargeTitleModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .font(.largeTitle)
-            .fontWeight(.bold)
-    }
+extension Color {
+    static let darkBlue = Color(red: 0.1, green: 0.2, blue: 0.5)
+    static let starYellow = Color(red: 1.0, green: 1.0, blue: 0.0)
 }
 
-extension View {
-    public func largeTitleBold() -> some View {
-        modifier(LargeTitleModifier())
-    }
-}
-
-/*struct BackgroundModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .background(content: { LinearGradient(gradient: Gradient(colors: [.cyan, .white]), startPoint: .top, endPoint: .bottom) })
-            .ignoresSafeArea()
-    }
-}*/
-extension View {
-    public func backgroundGradient() -> some View {
-        LinearGradient(gradient: Gradient(colors: [.cyan, .white]), startPoint: .top, endPoint: .bottom)
-            .ignoresSafeArea()
-    }
-}
-
-
+// animation extension that makes our animation work
 extension Animation {
     func rotate(_ isSelected: Bool) -> Animation {
         if isSelected {
