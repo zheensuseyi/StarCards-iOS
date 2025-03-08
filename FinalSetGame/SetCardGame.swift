@@ -9,24 +9,25 @@ import SwiftUI
 
 // FIXME: Fix alerts, see model
 class SetCardGame: ObservableObject {
-    // our model, initalized here
-    @Published private var game = GameSettings()
-    
-    @Published var gameOver: Bool = false
-    @Published var incorrectGuess: Bool = false
-    
-    init() {
-        gameOver = game.gameOver
-        incorrectGuess = game.incorrectGuess
-    }
+    // MARK: Model initalization
+    private var game = GameSettings()
     
     // MARK: model variables
     var score: Int {
-        return game.score
+        game.score
     }
     var gameDeck: [GameSettings.Card] {
-        return game.gameDeck
+        game.gameDeck
     }
+    private var gameOver: Bool {
+        game.gameOver
+    }
+    private var incorrectGuess: Bool {
+        game.incorrectGuess
+    }
+    
+    // MARK: Alert variable for view
+    @Published var gameChange: Bool = false
     
     // MARK: Model Functions
     func cardTapped(_ cardID: Int) {
@@ -40,87 +41,86 @@ class SetCardGame: ObservableObject {
                 deckToSend.append(card)
             }
         }
-        //     print("Number of cards in deck: \(deckToSend.count)") // debugging
         if deckToSend.count == 3 {
             game.checkAnswer(deckToSend)
         }
         syncWithModel()
     }
     
-    func addThreeCards() {
+    func addCards() {
         game.addCards()
         syncWithModel()
     }
     
     
-    // syncs gameLost and gameWon with model
-    func syncWithModel() {
-        gameOver = game.gameOver
-        incorrectGuess = game.incorrectGuess
+    // MARK: Updating gameChange
+    private func syncWithModel() {
+        if gameOver == true || incorrectGuess == true {
+            gameChange = true
+        }
+        else {
+            gameChange = false
+        }
     }
     
     
     // MARK: alerts for views
-    var gameOverAlert: Alert {
+    var gameAlert: Alert {
         if score < 1 {
-            return Alert(title: Text("Game Over!"), message: Text("Better luck next time.... Try again?"), dismissButton: .default(Text("Try again?"), action: { [self] in newGame()}))
+            Alert(title: Text("Game Over!"), message: Text("Better luck next time.... Try again?"), dismissButton: .default(Text("Try again?"), action: { [self] in newGame()}))
+        }
+        else if gameOver {
+            Alert(title: Text("You found a set!"), message: Text("You won! Your final score was \(score)"), dismissButton: .default(Text("Play again?"), action: { [self] in newGame()}))
         }
         else {
-            return Alert(title: Text("You found a set!"), message: Text("You won! Your final score was \(score)"), dismissButton: .default(Text("Play again?"), action: { [self] in newGame()}))
+            Alert(title: Text("Incorrect"), message: Text("That is not a set. You just lost 9 points!"), dismissButton: .default(Text("Dismiss"), action: { [self] in resetGuess()}))
         }
     }
     
-    var incorrectGuessAlert: Alert {
-        Alert(title: Text("Incorrect"), message: Text("That is not a set. You just lost 9 points!"), dismissButton: .default(Text("Dismiss"), action: { [self] in resetGuess()}))
-    }
     
     // MARK: Functions that only get called with alerts
-    private func newGame() {
-        game.newGame()
-        syncWithModel()
-    }
-    
     private func resetGuess() {
         game.resetGuess()
         syncWithModel()
     }
     
-    // MARK: Shapes for GameRulesView
-    let Star = Image(systemName: "star.fill")
-    let Triangle = Image(systemName: "triangle.fill")
-    let Circle = Image(systemName: "circle.fill")
+    private func newGame() {
+        game.newGame()
+        syncWithModel()
+    }
     
-    // MARK: Functions meant for the view (card initalization)
-    func initalizeCardShape(_ shapeString: String) -> Image {
-        switch shapeString {
+    
+    // MARK: Rendering cards for the view
+    func initalizeCardShape(_ shapeName: String) -> Image {
+        switch shapeName {
         case "Star":
-            return Star
+            Image.star
         case "Triangle":
-            return Triangle
+            Image.triangle
         case "Circle":
-            return Circle
+            Image.circle
         default:
-            return Triangle
+            Image.triangle
         }
     }
     
-    func initalizeCardColor(_ colorString: String) -> Color {
-        switch colorString {
+    func initalizeCardColor(_ colorName: String) -> Color {
+        switch colorName {
         case "Red":
-            return Color(.red)
+            Color(.red)
         case "Yellow":
-            return Color(.yellow)
+            Color(.yellow)
         case "Blue":
-            return Color(.blue)
+            Color(.blue)
         case "Green":
-            return Color(.green)
+            Color(.green)
         case "Orange":
-            return Color(.orange)
+            Color(.orange)
         case "Purple":
-            return Color(.purple)
+            Color(.purple)
         default:
-            return Color(.red)
+            Color(.red)
         }
     }
-    
 }
+

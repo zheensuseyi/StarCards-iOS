@@ -9,61 +9,52 @@ import SwiftUI
 
 // FIXME: Make this code a little cleaner
 struct ContentView: View {
-    @ObservedObject var vm: SetCardGame
+    @StateObject var vm = SetCardGame()
     var body: some View {
         NavigationStack {
             ZStack {
                 nightTimeGradient()
                 VStack {
-                    titleAndScore(score: vm.score)
+                    titleScoreDisplay
                     ScrollView {
                         AspectVGrid(vm: vm)
                     }
-                    buttons(vm: vm)
+                    buttons
                 }
-                .scrollIndicators(.hidden)
-                .padding()
+                .contentViewModifier()
             }
         }
     }
     
-    // MARK: helper views to make contentview look cleaner
-    private struct titleAndScore: View {
-        let score: Int
-        var body: some View {
-            Text("Sky Cards✨")
-                .largeTitleBold()
-            Text("Score: \(score)")
-                .foregroundStyle(Color.starYellow)
-                .fontWeight(.medium)
-        }
+    // MARK: View builders to make ContentView look cleaner
+    @ViewBuilder
+    private var titleScoreDisplay: some View {
+        Text("Sky Cards✨")
+            .mainTitleText()
+        Text("Score: \(vm.score)")
+            .scoreText()
     }
     
-    private struct buttons: View {
-        @ObservedObject var vm: SetCardGame
-        var body: some View {
-            HStack {
-                Button("Add Cards \(Image(systemName: "plus.app.fill"))") {
-                    vm.addThreeCards()
-                }
-                .foregroundStyle(.white)
-                Spacer()
-                NavigationLink(destination: GamesRulesView(vm: vm)) {
-                    Label("Game Rules", systemImage: "questionmark.circle.fill")
-                }
-                .foregroundStyle(.white)
+    @ViewBuilder
+    private var buttons: some View {
+        HStack {
+            Button("Add Cards \(Image(systemName: "plus.app.fill"))") {
+                vm.addCards()
             }
-            .alert(isPresented: $vm.gameOver) {
-                vm.gameOverAlert
+            Spacer()
+            NavigationLink(destination: GamesRulesView()) {
+                Label("Game Rules", systemImage: "questionmark.circle.fill")
             }
-            .font(.title2)
         }
+        .alert(isPresented: $vm.gameChange) {
+            vm.gameAlert
+        }
+        .buttonText()
     }
 }
 
 
-
 #Preview {
-    ContentView(vm: SetCardGame())
+    ContentView()
 }
 
