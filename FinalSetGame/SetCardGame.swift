@@ -33,7 +33,7 @@ class SetCardGame: ObservableObject {
     func cardTapped(_ cardID: Int) {
         game.cardTapped(cardID)
     }
-    
+
     func checkAnswer() {
         var deckToSend: [GameSettings.Card] = []
         for card in gameDeck {
@@ -64,7 +64,7 @@ class SetCardGame: ObservableObject {
     }
     
     
-    // MARK: alerts for views
+    // MARK: alerts for view(s)
     var gameAlert: Alert {
         if score < 1 {
             Alert(title: Text("Game Over!"), message: Text("Better luck next time.... Try again?"), dismissButton: .default(Text("Try again?"), action: { [self] in newGame()}))

@@ -7,6 +7,30 @@
 
 import Foundation
 import SwiftUI
+// MARK: Image extensions
+extension Image {
+    static let star: Image = Image(systemName: "star.fill")
+    static let triangle: Image = Image(systemName: "triangle.fill")
+    static let circle: Image = Image(systemName: "circle.fill")
+}
+
+// MARK: Color extensions
+extension Color {
+    static let darkBlue = Color(red: 0.1, green: 0.2, blue: 0.5)
+    static let starYellow = Color(red: 1.0, green: 1.0, blue: 0.0)
+}
+
+// MARK: Animation extensions
+extension Animation {
+    func rotate(_ isSelected: Bool) -> Animation {
+        if isSelected {
+            return Animation.linear(duration: 1).repeatForever(autoreverses: false)
+        }
+        else {
+            return self
+        }
+    }
+}
 
 // MARK: Text Modifiers
 struct Title2TextModifer: ViewModifier {
@@ -100,27 +124,3 @@ extension View {
     }
 }
 
-// MARK: Image extensions
-extension Image {
-    static let star: Image = Image(systemName: "star.fill")
-    static let triangle: Image = Image(systemName: "triangle.fill")
-    static let circle: Image = Image(systemName: "circle.fill")
-}
-
-// MARK: Color extensions
-extension Color {
-    static let darkBlue = Color(red: 0.1, green: 0.2, blue: 0.5)
-    static let starYellow = Color(red: 1.0, green: 1.0, blue: 0.0)
-}
-
-// MARK: Animation extensions
-extension Animation {
-    func rotate(_ isSelected: Bool) -> Animation {
-        if isSelected {
-            return Animation.linear(duration: 1).repeatForever(autoreverses: false)
-        }
-        else {
-            return self
-        }
-    }
-}
