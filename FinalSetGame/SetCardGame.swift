@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// FIXME: Fix alerts, see model
 class SetCardGame: ObservableObject {
     // MARK: Model initalization
     private var game = GameSettings()

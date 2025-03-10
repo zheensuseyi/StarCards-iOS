@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// FIXME: Make this code a little cleaner
 struct ContentView: View {
     @StateObject var vm = SetCardGame()
     var body: some View {

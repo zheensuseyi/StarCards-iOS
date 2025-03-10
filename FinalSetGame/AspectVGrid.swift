@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// FIXME: Fix the animations and alerts
 struct AspectVGrid: View, Animatable {
     @ObservedObject var vm: SetCardGame
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
