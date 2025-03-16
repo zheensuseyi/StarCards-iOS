@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var vm = SetCardGame()
+    @ObservedObject var vm: SetCardGame
     var body: some View {
         NavigationStack {
             ZStack {
@@ -54,6 +54,6 @@ struct ContentView: View {
 
 
 #Preview {
-    ContentView()
+    ContentView(vm: SetCardGame())
 }
 

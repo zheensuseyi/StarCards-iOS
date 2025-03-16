@@ -10,8 +10,9 @@ import SwiftUI
 @main
 struct FinalSetGameApp: App {
     var body: some Scene {
+        @StateObject var vm = SetCardGame()
         WindowGroup {
-            ContentView(vm: SetCardGame())
+            ContentView(vm: vm)
         }
     }
 }
